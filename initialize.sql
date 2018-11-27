@@ -1,13 +1,11 @@
 /* This script was used to prepopulate the tables in the database with values */
 
-INSERT INTO Employee (id, username, password, deptID, name, isAdmin)
-VALUES	("99775", "longmane", "", "007", "Emily Longman", "1"),
-		("99420", "schmidtm", "", "007", "Max Schmidt", "1"),
-		("34018", "instructor", "", "001", "Barry Good", "1"),
-		("34000", "freemang", "", "002", "Gordon Freeman", "0"),
-		("34001", "glados", "", "003", "Sabine Glado", "0"),
-		("35802", "arans", "", "004", "Samus Aran", "0");
-
+INSERT INTO VLAN (id, name, secLevel)
+VALUES 	("0070", "it_range", "1"),
+		("0010", "exec_range", "0"),
+		("0020", "engr_range", "0"),
+		("0030", "acct_range", "1"),
+		("0040", "sales_range", "0");
 
 INSERT INTO Department (id, name, location, vlanID)
 VALUES 	("007", "IT", "Basement Floor", "0070"),
@@ -16,12 +14,6 @@ VALUES 	("007", "IT", "Basement Floor", "0070"),
 		("003", "Accounting", "3rd Floor", "0030"),
 		("004", "Sales", "5th Floor", "0040");
 
-INSERT INTO VLAN (id, name, secLevel)
-VALUES 	("0070", "it_range", "1"),
-		("0010", "exec_range", "0"),
-		("0020", "engr_range", "0"),
-		("0030", "acct_range", "1"),
-		("0040", "sales_range", "0");
 
 INSERT INTO IP Range (id, size, DHCPEn, vlanID)
 VALUES 	("0071", "", "1", "0070"),
@@ -48,13 +40,21 @@ VALUES 	("10.420.2.1", "0071", "1"),
 		("10.420.2.11", "0041", "1"),
 		("128.193.24.24", "0042", "0");
 
-INSERT INTO Device (MACAddress, timestamp, username, description, type, IPAddress, deptOwner)
-VALUES 	("ac:2b:c8:91:aa:b5", "", "longmane", "sec_desktop", "desktop", "10.420.2.1", "007"),
-		("cc:72:c8:21:8a:ec", "", "schmidtm", "it_desktop", "desktop", "10.420.2.2", "007"),
-		("07:11:2a:bb:66:42", "", "instructor", "el_prez", "laptop", "10.420.2.5", "001"),
-		("bc:33:01:91:9a:65", "", "freemang", "engr_desktop1", "desktop", "10.420.2.18", "002"),
-		("e8:61:ed:dd:dd:dd", "", "glados", "acct_laptop", "laptop", "10.420.2.20", "003"),
-		("69:ae:55:78:6e:98", "", "arans", "sales_laptop", "laptop", "10.420.2.11", "004");
+INSERT INTO Employee (id, username, deptID, name, isAdmin)
+VALUES	("99775", "longmane", "007", "Emily Longman", "1"),
+		("99420", "schmidtm", "007", "Max Schmidt", "1"),
+		("34018", "instructor", "001", "Barry Good", "1"),
+		("34000", "freemang", "002", "Gordon Freeman", "0"),
+		("34001", "glados", "003", "Sabine Glado", "0"),
+		("35802", "arans", "004", "Samus Aran", "0");
+
+INSERT INTO Device (MACAddress, username, description, type, IPAddress, deptOwner)
+VALUES 	("ac:2b:c8:91:aa:b5", "longmane", "sec_desktop", "desktop", "10.420.2.1", "007"),
+		("cc:72:c8:21:8a:ec", "schmidtm", "it_desktop", "desktop", "10.420.2.2", "007"),
+		("07:11:2a:bb:66:42", "instructor", "el_prez", "laptop", "10.420.2.5", "001"),
+		("bc:33:01:91:9a:65", "freemang", "engr_desktop1", "desktop", "10.420.2.18", "002"),
+		("e8:61:ed:dd:dd:dd", "glados", "acct_laptop", "laptop", "10.420.2.20", "003"),
+		("69:ae:55:78:6e:98", "arans", "sales_laptop", "laptop", "10.420.2.11", "004");
 
 
 
