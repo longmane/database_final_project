@@ -16,6 +16,7 @@ var jsonToTable = function(json, tableName) {
         }
     }
     row += "<td><button data-type='" + tableName + "' data-id='" + id + "' class='btn btn-danger delete'>Delete</button></td>";
+    row += "<td><button data-type='" + tableName + "' data-id='" + id + "' class='btn btn-info update'>Update</button></td>";
     row += '</tr>';
     table += row;
     });
@@ -60,6 +61,7 @@ var getColumnHeaders = function(keys) {
         }
     }
     header += '<th>Delete</th>';
+    header += '<th>Update</th>';
     header += '</tr>';
     return header;
 };
