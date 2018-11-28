@@ -57,6 +57,10 @@ app.get('/devices', function(req, res) {
     selectTableData(res, 'Device');
 });
 
+app.get('/add', function(req, res) {
+  selectTableData(res, 'Device');
+});
+
 // Searchability function
 
 app.post('/search_mac', function(req, res) {

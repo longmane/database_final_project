@@ -102,6 +102,9 @@ var deleteEntry = function(e) {
     e.preventDefault();
     var req = {};
     var id = $(e.target).attr('data-id');
+
+    console.log('id: ' + id);
+
     if (id !== 'undefined') {
         req = { 'id': id };
     } else {
@@ -142,6 +145,20 @@ var renderTable = function(url, selector) {
     });
 };
 
+var renderForm = function(url, selector) {
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        success: function(data) {
+            $(selector).html('');
+            $(selector).append(composeForm(selector, getKeys(data.results[0])));
+            $(selector + ' .save').on('click', submitEntry);
+            $(selector + ' .delete').on('click', deleteEntry);
+        }
+    });
+};
+
+
 var makeSelect = function(data) {
     var str = '';
     for (var key in data) {
@@ -174,6 +191,7 @@ var searchChar = function(e) {
 
 var render = function() {
     renderTable('/devices', '#MACAddr');
+    //renderForm('/add', '#MACAddr');
     $('.search').on('click', searchChar);
 };
 
