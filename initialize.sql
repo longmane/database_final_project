@@ -43,15 +43,15 @@ VALUES 	("10.240.1.1", "0071", "1"),
 INSERT INTO Employee (id, username, deptID, name, isAdmin)
 VALUES	("99775", "longmane", "007", "Emily Longman", "1"),
 		("99420", "schmidtm", "007", "Max Schmidt", "1"),
-		("34018", "instructor", "001", "Barry Good", "1"),
+		("34018", "instrctr", "001", "Barry Good", "1"),
 		("34000", "freemang", "002", "Gordon Freeman", "0"),
 		("34001", "glados", "003", "Sabine Glado", "0"),
 		("35802", "arans", "004", "Samus Aran", "0");
 
 INSERT INTO Device (MACAddress, username, description, type, IPAddress, deptOwner)
-VALUES 	("ac:2b:c8:91:aa:b5", "longmane", "sec_desktop", "desktop", "10.240.1.1", "007"),
-		("cc:72:c8:21:8a:ec", "schmidtm", "it_desktop", "desktop", "10.240.1.2", "007"),
-		("07:11:2a:bb:66:42", "instrctr", "el_prez", "laptop", "10.240.3.5", "001"),
-		("bc:33:01:91:9a:65", "freemang", "engr_desktop1", "desktop", "10.240.30.9", "002"),
-		("e8:61:ed:dd:dd:dd", "glados", "acct_laptop", "laptop", "10.240.50.50", "003"),
-		("69:ae:55:78:6e:98", "arans", "sales_laptop", "laptop", "10.240.4.3", "004");
+VALUES 	("ac2bc891aab5", "longmane", "sec_desktop", "desktop", "10.240.1.1", "007"),
+		("cc72c8218aec", "schmidtm", "it_desktop", "desktop", "10.240.1.2", "007"),
+		("07112abb6642", "instrctr", "el_prez", "laptop", "10.240.3.5", "001"),
+		("bc3301919a65", "freemang", "engr_desktop1", "desktop", "10.240.30.9", "002"),
+		("e861eddddd", "glados", "acct_laptop", "laptop", "10.240.50.50", "003"),
+		("69ae55786e98", "arans", "sales_laptop", "laptop", "10.240.4.3", "004");

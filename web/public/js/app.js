@@ -135,7 +135,7 @@ var renderTable = function(url, selector) {
         success: function(data) {
             $(selector).html('');
             $(selector).append('<h3>' + selector.substring(1) + '</h3>' + jsonToTable(data, selector.substring(1)));
-            $(selector).append(composeForm(selector, getKeys(data.results[0])));
+            //$(selector).append(composeForm(selector, getKeys(data.results[0])));
             $(selector + ' .save').on('click', submitEntry);
             $(selector + ' .delete').on('click', deleteEntry);
         }

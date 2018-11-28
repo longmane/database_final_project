@@ -62,7 +62,7 @@ app.get('/devices', function(req, res) {
 app.post('/search_mac', function(req, res) {
     var context = {};
     var body = req.body;
-    var queryStr = 'SELECT * FROM Device WHERE Device.MACAddress=' + body.MAC + ';';
+    var queryStr = 'SELECT * FROM Device WHERE Device.MACAddress="' + body.MAC + '";';
   
     console.log('Performing query: ' + queryStr);
     pool.query(queryStr, function(err, rows, fields) {
