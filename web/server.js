@@ -64,9 +64,9 @@ app.post('/search_mac', function(req, res) {
             console.log(err);
             return;
         }
-        context.results = JSON.Stringify(rows);
+        context.results = rows;
         console.log('   Result: ' + context.results);
-        res.render('home', context);
+        res.render(context);
     });
 });
 
