@@ -66,7 +66,7 @@ app.post('/search_mac', function(req, res) {
         }
         context.results = rows;
         console.log('   Result: ' + context.results);
-        res.render(context);
+        res.send(context);
     });
 });
 

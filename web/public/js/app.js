@@ -165,7 +165,7 @@ var searchChar = function(e) {
             var results = data.results;
             $('.search_results').html('');
             for (var i = 0; i < results.length; i++) {
-                var str = '<li>' + results[i].fname + ' ' + results[i].lname + '</li>';
+                var str = '<li>' + results[i].timestamp + ' ' + results[i].username + '</li>';
                 $('.search_results').append(str);
             }
         }
