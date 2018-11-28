@@ -28,30 +28,36 @@ var pool = mysql.createPool({
 // END OF REQUIRE-ABLES
 
 
+var selectTableData = function(res, table) {
+  var context = {};
+  pool.query('SELECT * FROM ' + table, function(err, rows, fields) {
+      if (err) {
+          console.log(err);
+          return;
+      }
+      context.results = rows;
+      res.send(context);
+  });
+};
+
+
 // Render root page
 app.get('/', function(req, res, next) {
     res.render('home');
 });
 
+// Render registration page
+app.get('/register', function(req, res, next) {
+  res.render('register');
+});
 
 
-var selectTableData = function(res, table) {
-    var context = {};
-    pool.query('SELECT * FROM ' + table, function(err, rows, fields) {
-        if (err) {
-            console.log(err);
-            return;
-        }
-        context.results = rows;
-        res.send(context);
-    });
-};
 
 app.get('/devices', function(req, res) {
     selectTableData(res, 'Device');
 });
 
-//searchability function
+// Searchability function
 
 app.post('/search_mac', function(req, res) {
     var context = {};
@@ -65,7 +71,7 @@ app.post('/search_mac', function(req, res) {
             return;
         }
         context.results = rows;
-        console.log('   Result: ' + context.results);
+        //console.log('   Result: ' + context.results);
         res.send(context);
     });
 });
