@@ -51,7 +51,7 @@ app.get('/devices', function(req, res) {
     selectTableData(res, 'Device');
 });
 
-
+//searchability function
 
 app.post('/search_mac', function(req, res) {
     var context = {};
@@ -70,6 +70,58 @@ app.post('/search_mac', function(req, res) {
     });
 });
 
+// Update functionality
+
+var generateUpdateStr = function(body, table) {
+  var keys = [];
+  var values = [];
+  var str = '';
+  for (var key in body) {
+    keys.push(key);
+    values.push("'" + body[key] + "'");
+  }
+  str += "INSERT INTO " + table;
+  str += "(" + keys.join(",") + ")";
+  str += " VALUES (" + values.join(",") + ");";
+
+  return str;
+};
+
+var updateEntry = function(req, res, table) {
+  var updateStr = generateUpdateStr(req.body, table);
+
+  pool.query(updateStr, function(err, rows, fields) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    res.send(JSON.stringify(rows));
+  });
+};
+
+app.post('/devices', function(req, res) {
+  updateEntry(req, res, 'MACAddress');
+});
+
+
+// Deletion functionality
+
+var deleteEntry = function(req, res, table) {
+  var context = {};
+  var id = req.body.id;
+  pool.query('DELETE FROM ' + table + ' WHERE id = ' + id, function(err, rows, fields) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    context.results = JSON.stringify(rows);
+    res.send(context);
+  });
+};
+
+app.delete('/devices', function(req, res) {
+  deleteEntry(req, res, 'MACAddress');
+});
 
 // ERRORS
 
@@ -89,5 +141,5 @@ app.use(function(err, req, res, next){
 
 
 app.listen(app.get('port'), function() {
-    console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
+    console.log('Express started on ' + app.get('port') + '; press Ctrl-C to terminate.');
 });
