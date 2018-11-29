@@ -111,6 +111,36 @@ var deleteEntry = function(e) {
     }); 
 }
 
+var updateEntry = function(e) {
+    e.preventDefault();
+    var req = {};
+    var id = $(e.target).attr('data-id');
+
+    if (id !== 'undefined') {
+        req = { 'id': id };
+    } else {
+        var selector = $(e.target).attr('data-type');
+        var keysArr = $('#' + selector + ' th').map(function(){
+            return $(this).text();              
+        }).get();
+        var valuesArr = $(e.target).closest('tr').children().map(function(){
+            return $(this).text();
+        });
+        req[keysArr[0]] = valuesArr[0];
+        req[keysArr[1]] = valuesArr[1];
+    }
+
+    $.ajax({
+        url: '/update',
+        dataType: 'json',
+        data: req,
+        type: 'PUT',
+        success: function(data) {
+            render();
+        }
+    }); 
+}
+
 var renderTable = function(url, selector) {
     $.ajax({
         url: url,
@@ -120,6 +150,7 @@ var renderTable = function(url, selector) {
             $(selector).append('<h3>' + selector.substring(1) + '</h3>' + jsonToTable(data, selector.substring(1)));
             $(selector + ' .save').on('click', submitEntry);
             $(selector + ' .delete').on('click', deleteEntry);
+            $(selector + ' .update').on('click', updateEntry);
         }
     });
 };

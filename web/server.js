@@ -98,6 +98,7 @@ app.post('/search_mac', function(req, res) {
 
 // Update functionality
 
+/*
 var generateUpdateStr = function(body, table) {
   var keys = [];
   var values = [];
@@ -124,14 +125,27 @@ var updateEntry = function(req, res, table) {
     res.send(JSON.stringify(rows));
   });
 };
+*/
 
-app.post('/devices', function(req, res) {
-  updateEntry(req, res, 'MACAddress');
+app.put('/update', function(req, res) {
+    var context = {};
+    var body = req.body;
+    var queryStr = 'UPDATE Device SET MACAddress=?, username=?, description=?, type=?, IPAddress=? WHERE id=?';
+    var inserts = [req.body.MACAddress, req.body.username, req.body.description, req.body.type, req.body.IPAddress, req.params.id];
+    console.log('Performing query: ' + queryStr);
+    pool.query(queryStr, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        console.log('Updated Row(s):', rows.affectedRows);
+        context.results = rows;
+        res.send(context);
+    });
 });
 
-
 // Deletion functionality
-
+/*
 var deleteEntry = function(req, res, table) {
   var context = {};
   var id = req.body.id;
@@ -148,6 +162,7 @@ var deleteEntry = function(req, res, table) {
 app.delete('/devices', function(req, res) {
   deleteEntry(req, res, 'MACAddress');
 });
+*/
 
 // ERRORS
 
