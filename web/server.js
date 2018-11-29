@@ -52,7 +52,7 @@ app.get('/register', function(req, res, next) {
 });
 
 
-
+// Routes for ajax
 app.get('/devices', function(req, res) {
     selectTableData(res, 'Device');
 });
@@ -72,7 +72,6 @@ app.delete('/delete', function(req, res) {
             console.log(err);
             return;
         }
-        console.log('Deleted Row(s):', rows.affectedRows);
         context.results = rows;
         res.send(context);
     });

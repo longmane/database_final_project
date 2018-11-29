@@ -21,21 +21,16 @@
 </div>
 -->
 
+<h2>Search for MAC Addresses</h2>
+<form class="form-horizontal MACAddress">
+    <input id="MAC" class="col-sm-10" type="text">
+    <button class="search btn btn-submit">Search</button>
+</form>
+<h3>Search Results:</h3>
+<ul class="search_results"></ul>
+
 <table>
     <tbody> 
-        <!--{{#each devices}} 
-        <tr> 
-            <td id="MACAddr">{{MACAddress}}</td> 
-            <td id="timestamp">{{timestamp}}</td> 
-            <td id="username">{{username}}</td> 
-            <td id="description">{{description}}</td>
-            <td id="type">{{type}}</td>
-            <td id="IPAddr">{{IPAddress}}</td>
-            <td id="deptOwner">{{deptOwner}}</td>
-            <td><button onclick="deletePerson({{id}})">Delete</button></td>
-            <td><a href="/update/{{id}}">Update</a></td>
-        </tr> 
-        {{/each}}-->
         <td id="MACAddr"></td> 
         <td id="timestamp"></td> 
         <td id="username"></td>
@@ -44,7 +39,6 @@
         <td id="IPAddr"></td>
         <td id="deptOwner"></td>
     </tbody> 
-
 </table> 
 
 <div id="register">
