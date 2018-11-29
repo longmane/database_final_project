@@ -58,6 +58,8 @@ var composePost = function(e) {
         }
     });
 
+    console.log('Le compose: ', data);
+
     return data;
 };
 
@@ -68,10 +70,9 @@ var findUrl = function(e) {
 var submitEntry = function(e) {
     e.preventDefault();
     var data = composePost(e);
-    var url = findUrl(e);
 
     $.ajax({
-        url: url,
+        url: '/add',
         dataType: 'json',
         type: 'POST',
         data: data,
@@ -131,7 +132,7 @@ var updateEntry = function(e) {
     }
 
     $.ajax({
-        url: '/update',
+        url: '/' + MA,
         dataType: 'json',
         data: req,
         type: 'PUT',
@@ -140,6 +141,17 @@ var updateEntry = function(e) {
         }
     }); 
 }
+
+function updateDevice(MACAddress){
+    $.ajax({
+        url: '/' + MACAddress,
+        type: 'PUT',
+        data: $('#updateDevice').serialize(),
+        success: function(result){
+            window.location.replace("./");
+        }
+    })
+};
 
 var renderTable = function(url, selector) {
     $.ajax({

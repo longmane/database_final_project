@@ -1,0 +1,25 @@
+<h2>Update Existing Device</h2>
+<h3>Updating {{device.MACAddress}}</h3>
+<form id="updateDevice" action="/update" method="post">
+    <table>
+        <tr>
+            <td>MAC Address:
+            <td><input type="text" name="MACAddress" value={{device.MACAddress}}>
+        </tr>
+        <tr>
+            <td>Description:
+            <td><input type="text" name="description" value={{device.description}}>
+        </tr>
+        <tr>
+            <td>Device Type:
+            <td><input type="text" name="type" value={{device.type}}>
+        </tr>
+        <tr>
+            <td><button onclick="updateDevice({{device.MACAddress}})">Update</button>
+        </tr>
+    </table> 
+</form>
+
+<div id="Home">
+    <button type="button" class="btn btn-primary btn-block" onclick="location.href='/'">Home</button>
+</div>

@@ -40,11 +40,48 @@ var selectTableData = function(res, table) {
   });
 };
 
+getDevice = function(res, context, MACAddress, complete) {
+    var queryStr = 'SELECT MACAddress, description, type FROM Device WHERE MACAddress=?';
+    var inserts = [MACAddress];
+
+    pool.query(queryStr, inserts, function(err, rows, fields) {
+        if (err) {
+            res.write(JSON.stringify(err));
+            console.log(err);
+            res.end();
+        }
+        context.device = rows[0];
+        complete();
+    });
+}
+
 
 // Render root page
 app.get('/', function(req, res, next) {
+    var callbackCount = 0;
     res.render('home');
 });
+
+app.get('/devices', function(req, res) {
+    selectTableData(res, 'Device');
+});
+
+// Get a single device and render update page
+/*
+app.get('/:MACAddress', function(req, res) {
+    callbackCount = 0;
+    var context = {};
+    context.jsscripts = ["updateDevice.js"];
+    
+    getDevice(res, context, req.params.MACAddress, complete);
+    function complete(){
+        callbackCount++;
+        if (callbackCount >= 2) {
+            res.render('update', context);
+        }
+    }
+})
+*/
 
 // Render registration page
 app.get('/register', function(req, res, next) {
@@ -52,13 +89,22 @@ app.get('/register', function(req, res, next) {
 });
 
 
-// Routes for ajax
-app.get('/devices', function(req, res) {
-    selectTableData(res, 'Device');
-});
-
 app.post('/add', function(req, res) {
-    selectTableData(res, 'Device');
+    var context = {};
+    var body = req.body;
+    var queryStr = 'INSERT INTO Device (MACAddress, description, type) VALUES (?, ?, ?);';
+    var inserts = [body.MACAddress, body.description, body.type];
+
+    console.log('Performing query: ' + queryStr + ' - inserting - ' + inserts);
+    pool.query(queryStr, inserts, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        context.results = rows;
+        //res.send(context);
+        res.render('home');
+    });
 });
 
 app.delete('/delete', function(req, res) {
@@ -77,7 +123,7 @@ app.delete('/delete', function(req, res) {
     });
 });
 
-// Searchability function
+// Search functionality
 
 app.post('/search_mac', function(req, res) {
     var context = {};
@@ -97,71 +143,22 @@ app.post('/search_mac', function(req, res) {
 
 // Update functionality
 
-/*
-var generateUpdateStr = function(body, table) {
-  var keys = [];
-  var values = [];
-  var str = '';
-  for (var key in body) {
-    keys.push(key);
-    values.push("'" + body[key] + "'");
-  }
-  str += "INSERT INTO " + table;
-  str += "(" + keys.join(",") + ")";
-  str += " VALUES (" + values.join(",") + ");";
-
-  return str;
-};
-
-var updateEntry = function(req, res, table) {
-  var updateStr = generateUpdateStr(req.body, table);
-
-  pool.query(updateStr, function(err, rows, fields) {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    res.send(JSON.stringify(rows));
-  });
-};
-*/
-
 app.put('/update', function(req, res) {
     var context = {};
     var body = req.body;
-    var queryStr = 'UPDATE Device SET MACAddress=?, username=?, description=?, type=?, IPAddress=? WHERE id=?';
-    var inserts = [req.body.MACAddress, req.body.username, req.body.description, req.body.type, req.body.IPAddress, req.params.id];
+    var queryStr = 'UPDATE Device SET MACAddress=?, username=?, description=?, type=?, IPAddress=? WHERE Device.MACAddress=?';
+    var inserts = [body.newMACAddress, body.username, body.description, body.type, body.IPAddress, body.MACAddress];
+
     console.log('Performing query: ' + queryStr);
-    pool.query(queryStr, function(err, rows, fields) {
+    pool.query(queryStr, inserts, function(err, rows, fields) {
         if (err) {
             console.log(err);
             return;
         }
-        console.log('Updated Row(s):', rows.affectedRows);
         context.results = rows;
         res.send(context);
     });
 });
-
-// Deletion functionality
-/*
-var deleteEntry = function(req, res, table) {
-  var context = {};
-  var id = req.body.id;
-  pool.query('DELETE FROM ' + table + ' WHERE id = ' + id, function(err, rows, fields) {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    context.results = JSON.stringify(rows);
-    res.send(context);
-  });
-};
-
-app.delete('/devices', function(req, res) {
-  deleteEntry(req, res, 'MACAddress');
-});
-*/
 
 // ERRORS
 
