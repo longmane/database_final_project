@@ -27,35 +27,31 @@
 {{this}}
 {{/each}}
 <table>
-    <thead> 
-        <th>MAC Address</th> 
-        <th>Last Seen Timestamp</th> 
-        <th>Username</th>
-        <th>Device Name</th>  
-        <th>Device Type</th>
-        <th>IP Address</th>
-        <th>Departmentally Owned?</th>
-    </thead> 
     <tbody> 
-        {{#each devices}} 
+        <!--{{#each devices}} 
         <tr> 
-            <td>{{MACAddress}}</td> 
-            <td>{{timestamp}}</td> 
-            <td>{{username}}</td> 
-            <td>{{description}}</td>
-            <td>{{type}}</td>
-            <td>{{IPAddress}}</td>
-            <td>{{deptOwner}}</td>
+            <td id="MACAddr">{{MACAddress}}</td> 
+            <td id="timestamp">{{timestamp}}</td> 
+            <td id="username">{{username}}</td> 
+            <td id="description">{{description}}</td>
+            <td id="type">{{type}}</td>
+            <td id="IPAddr">{{IPAddress}}</td>
+            <td id="deptOwner">{{deptOwner}}</td>
             <td><button onclick="deletePerson({{id}})">Delete</button></td>
             <td><a href="/update/{{id}}">Update</a></td>
         </tr> 
-        {{/each}} 
+        {{/each}}-->
+        <td id="MACAddr"></td> 
+        <td id="timestamp"></td> 
+        <td id="username"></td>
+        <td id="description"></td>  
+        <td id="type"></td>
+        <td id="IPAddr"></td>
+        <td id="deptOwner"></td>
     </tbody> 
 
-    <form id="adddevice" action="/devices" method="post">
-    MAC Address: <input type="text" name="MACAddress"><br>
-    Username: <input type="text" name="username"><br>
-    IP Address: <input type="text" name="IPAddress"><br>
-    <input type="submit" value="Submit">
-    </form>
 </table> 
+
+<div id="register">
+    <button type="button" class="btn btn-primary btn-block" onclick="location.href='/register'">Register New Device</button>
+</div>

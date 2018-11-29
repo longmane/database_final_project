@@ -25,25 +25,6 @@ var jsonToTable = function(json, tableName) {
     return table;  
 };
 
-var composeForm = function(selector, keys) {
-    var type = selector.substring(1);
-    var form = "<form class='form-horizontal'>";
-
-    for (var i = 0; i < keys.length; i++) {
-        if (keys[i] === 'id') continue;
-        form += "<div class='form-group'><label class='col-sm-2 control-label'>" + keys[i] + "</label>";
-        form += "<div class='col-sm-6'>";
-        form += "<input type='text' class='form-control' id='" + keys[i] + "'>";
-        form += "</div></div>";
-    }
-    form += "<div class='form-group'><div class='col-sm-10 col-sm-offset-7'>";
-    form += "<button class='btn btn-submit save' data-type='" + type + "' type='submit'>Save</button>";
-    form += "</div></div>";
-    form += "</form>";
-
-    return form;
-};
-
 var getKeys = function(data) {
     var keys = [];
     for (var key in data) {
@@ -105,8 +86,6 @@ var deleteEntry = function(e) {
     var req = {};
     var id = $(e.target).attr('data-id');
 
-    console.log('id: ' + id);
-
     if (id !== 'undefined') {
         req = { 'id': id };
     } else {
@@ -120,10 +99,9 @@ var deleteEntry = function(e) {
         req[keysArr[0]] = valuesArr[0];
         req[keysArr[1]] = valuesArr[1];
     }
-    var url = '/' + $(e.target).attr('data-type');
 
     $.ajax({
-        url: url,
+        url: '/delete',
         dataType: 'json',
         data: req,
         type: 'DELETE',
@@ -140,26 +118,11 @@ var renderTable = function(url, selector) {
         success: function(data) {
             $(selector).html('');
             $(selector).append('<h3>' + selector.substring(1) + '</h3>' + jsonToTable(data, selector.substring(1)));
-            //$(selector).append(composeForm(selector, getKeys(data.results[0])));
             $(selector + ' .save').on('click', submitEntry);
             $(selector + ' .delete').on('click', deleteEntry);
         }
     });
 };
-
-var renderForm = function(url, selector) {
-    $.ajax({
-        url: url,
-        dataType: 'json',
-        success: function(data) {
-            $(selector).html('');
-            $(selector).append(composeForm(selector, getKeys(data.results[0])));
-            $(selector + ' .save').on('click', submitEntry);
-            $(selector + ' .delete').on('click', deleteEntry);
-        }
-    });
-};
-
 
 var makeSelect = function(data) {
     var str = '';
@@ -193,7 +156,6 @@ var searchChar = function(e) {
 
 var render = function() {
     renderTable('/devices', '#MACAddr');
-    //renderForm('/add', '#MACAddr');
     $('.search').on('click', searchChar);
 };
 

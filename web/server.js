@@ -48,7 +48,7 @@ app.get('/', function(req, res, next) {
 
 // Render registration page
 app.get('/register', function(req, res, next) {
-  res.render('register');
+    res.render('register');
 });
 
 
@@ -57,8 +57,25 @@ app.get('/devices', function(req, res) {
     selectTableData(res, 'Device');
 });
 
-app.get('/add', function(req, res) {
-  selectTableData(res, 'Device');
+app.post('/add', function(req, res) {
+    selectTableData(res, 'Device');
+});
+
+app.delete('/delete', function(req, res) {
+    var context = {};
+    var body = req.body;
+    var queryStr = 'DELETE FROM Device WHERE Device.MACAddress="' + body.MACAddress + '";';
+
+    console.log('Performing query: ' + queryStr);
+    pool.query(queryStr, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        console.log('Deleted Row(s):', rows.affectedRows);
+        context.results = rows;
+        res.send(context);
+    });
 });
 
 // Searchability function
@@ -75,7 +92,6 @@ app.post('/search_mac', function(req, res) {
             return;
         }
         context.results = rows;
-        //console.log('   Result: ' + context.results);
         res.send(context);
     });
 });

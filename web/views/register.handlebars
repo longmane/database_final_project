@@ -1,9 +1,27 @@
 <h1>MAC Trac</h1>
 <h2>Register New Device</h2>
+<body>
+    <form id="addDevice" action="/devices" method="post">
+        <table>
+            <tr>
+                <td>MAC Address:
+                <td><input type="text" name="MACAddress">
+            </tr>
+            <tr>
+                <td>Description:
+                <td><input type="text" name="Description">
+            </tr>
+            <tr>
+                <td>Device Type:
+                <td><input type="text" name="Type">
+            </tr>
+            <tr>
+                <td><input type="submit" value="Submit">
+            </tr>
+        </table> 
+    </form>
 
-
-
-
-<div id="home">
-  <a href="/">Home</a>
-</div>
+    <div id="Home">
+        <button type="button" class="btn btn-primary btn-block" onclick="location.href='/'">Home</button>
+    </div>
+</body>
